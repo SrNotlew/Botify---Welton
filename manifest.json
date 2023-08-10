@@ -1,0 +1,42 @@
+{
+    "name": "Botify Welton",
+    "version": "1.0.7",
+    "manifest_version": 3,
+    "description": "Extensão ",
+    "icons": {
+        "16": "icons/16x16.png",
+        "48": "icons/48x48.png",
+        "128": "icons/128x128.png"
+    },
+    "omnibox": {
+        "keyword": "wrg"
+    },
+    "action": {
+        "default_icon": {
+            "19": "icons/19x19.png",
+            "38": "icons/38x38.png"
+        },
+        "default_title": "Extensão ",
+        "default_popup": "browseraction/popup.html"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "activeTab",
+        "scripting",
+        "omnibox"
+    ],
+    "background": {
+        "service_worker": "background.js"
+      },   
+    "content_scripts": [
+        {
+            "matches": [
+                "https://open.spotify.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]    
+}

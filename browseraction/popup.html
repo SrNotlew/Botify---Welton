@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        .customLabel {
+            min-height: 50px;
+        }
+
+        #addPlayTime {
+            margin-top: 35px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-header">
+            Automação - Spotify
+        </div>
+        <div class="card-body">
+
+            <div style="width: 600px;" class="container-fluid">
+
+                <form>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="timeRefresh">Tempo de Refresh (segundos)</label>
+                                <input type="number" class="form-control" id="timeRefresh" value="25">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="timePlay">Tempo p/ recarregar (minutos)</label>
+                                <input type="number" class="form-control" id="timePlay" value="60">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="timeMinPause">Tempo Min. em pause (minutos)</label>
+                                <input type="number" class="form-control" id="timeMinPause" value="5">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="timeMaxPause">Tempo Max. em pause (minutos)</label>
+                                <input type="number" class="form-control" id="timeMaxPause" value="30">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="timeMinNextMusic">Tempo Min. prox. Musica
+                                    (minutos)</label>
+                                <input type="number" class="form-control" id="timeMinNextMusic" value="5">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="timeMaxNextMusic">Tempo Max. prox. Musica
+                                    (minutos)</label>
+                                <input type="number" class="form-control" id="timeMaxNextMusic" value="30">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="timeMinPlaylist">Tempo Min. Playlist (minutos)</label>
+                                <input type="number" class="form-control" id="timeMinPlaylist" value="20">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="timeMaxPlaylist">Tempo Max. Playlist (minutos)</label>
+                                <input type="number" class="form-control" id="timeMaxPlaylist" value="35">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="linkPlaylist">Link Playlist</label>
+                                <input type="text" class="form-control" id="linkPlaylist">
+                                <input type="button" id="addPlayList" value="Add Playlist" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Link</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableLink">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="button" id="removePlayList" value="Remove Playlist" />
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="form-row">
+                        <div class="col">
+                            <div style="text-align: left;">
+                                <button id="pause">Pausar Automação</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div style="text-align: right;">
+                                <button id="save">Salvar Informações</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
