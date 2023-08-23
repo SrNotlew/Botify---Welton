@@ -28,14 +28,14 @@ chrome.runtime.onConnect.addListener(function (port) {
     });
 });
 
-// // send a message to the content script
-// var playerSpotify = function (type) {
-//     chrome.tabs.query(null, function (tab) {
-//         chrome.tabs.sendMessage(tab.id, { type: type });
-//         // setting a badge
-//         //chrome.browserAction.setBadgeText({text: "play!"});
-//     });
-// }
+// send a message to the content script
+var playerSpotify = function (type) {
+    chrome.tabs.query(null, function (tab) {
+        chrome.tabs.sendMessage(tab.id, { type: type });
+        // setting a badge
+        //chrome.browserAction.setBadgeText({text: "play!"});
+    });
+}
 
 var playerSpotify = function (type) {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {

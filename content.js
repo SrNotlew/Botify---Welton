@@ -1,14 +1,14 @@
 console.log("ESTOU NO CONTENT E FUNCIONANDO")
-var classNameFields = {
-    playButton: '//button[@data-testid="play-button"]',
-    nextButton: 'mnipjT4SLDMgwiDCEnRC',
-    randomButton: 'KVKoQ3u4JpKTvSSFtd6J',
-    playListButton: 'Button-qlcn5g-0',
-    accompanyButton: 'playback-bar__progress-time-elapsed',
-    repeatButton: 'Vz6yjzttS0YlLcwrkoUR',
-    saveToYourLibraryButton: 'control-button-heart',
-    nameMusic: 'Q_174taY6n64ZGC3GsKj',
-}
+// var classNameFields = {
+//     playButton: '//button[@data-testid="play-button"]',
+//     nextButton: 'mnipjT4SLDMgwiDCEnRC',
+//     randomButton: 'KVKoQ3u4JpKTvSSFtd6J',
+//     playListButton: 'Button-qlcn5g-0',
+//     accompanyButton: 'playback-bar__progress-time-elapsed',
+//     repeatButton: 'Vz6yjzttS0YlLcwrkoUR',
+//     saveToYourLibraryButton: 'control-button-heart',
+//     nameMusic: 'Q_174taY6n64ZGC3GsKj',
+// }
 
 var objSpotify = {
     ONE_SECOND: '10',
@@ -30,7 +30,7 @@ var objSpotify = {
     LIST_MUSIC: [],
     CHANGED_PLAYLIST: false,
     dados: '',
-    lastTimer: '',
+    lastTimer: '3',
     countRepeat: 1,
     maxCountRepeat: 2
 }
@@ -70,7 +70,7 @@ function iniciarApi() {
 
         function playOnLoad() {
             document.body.style.backgroundColor = 'blue';
-            console.log('iniciando...');
+            console.log('OnLoad...');
             playPlayList();
             timerInit();
             timerPlay();
@@ -84,6 +84,7 @@ function iniciarApi() {
         }
 
         function funcLoop() {
+            timerIsPlay()
             setRandomActive();
 
             if (musicChanged() && probability(50)) {
@@ -99,7 +100,7 @@ function iniciarApi() {
                 playButton();
             } else {
                 console.log('Em pause');
-                stopButton();
+                //stopButton();
             }
 
             timerPlayList();
@@ -118,6 +119,8 @@ function iniciarApi() {
 
             //const accompanyButton = document.getElementsByClassName(classNameFields.accompanyButton)[0];
             if (accompanyButton != undefined) {
+                console.log("esotu tocando lastTimaer: ", objSpotify.lastTimer, " innerTet: ", accompanyButton.innerText)
+
                 if (objSpotify.lastTimer == accompanyButton.innerText) {
                     objSpotify.countRepeat++;
                     nextMusic();
@@ -126,6 +129,8 @@ function iniciarApi() {
                     window.location.reload();
                 }
                 objSpotify.lastTimer = accompanyButton.innerText;
+
+                console.log("aqui atualizo o valor de lastTimer: ", objSpotify.lastTimer)
             }
 
             if (goNextMusic() == true) {
@@ -171,7 +176,7 @@ function iniciarApi() {
             timerDailyPlay = setInterval(function () {
                 console.log('Reiniciando ' + new Date());
                 document.body.style.backgroundColor = 'red';
-                stopButton();
+                //stopButton();
                 clearInterval(timerMoment);
                 clearInterval(timerDailyPlay);
                 timerPause();
@@ -196,7 +201,11 @@ function iniciarApi() {
 
         ///Acompanha se a musica está tocando
         function nextMusic() {
-            const nextButton = document.getElementsByClassName(classNameFields.nextButton)[0];
+            let xpathExpression = "//*[@id=\"main\"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[1]"
+            let result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+            let nextButton = result.singleNodeValue;
+
+            //const nextButton = document.getElementsByClassName(classNameFields.nextButton)[0];
             if (nextButton != undefined) {
                 nextButton.click();
             }
@@ -227,7 +236,7 @@ function iniciarApi() {
             if (repeatButton !== null) {
                 var ariaLabel = repeatButton.getAttribute('aria-label');
                 var ariaChecked = repeatButton.getAttribute('aria-checked');
-                
+
                 if (ariaChecked === "false" || ariaLabel === 'Não repetir' || ariaLabel === 'Repetir') {
                     repeatButton.click();
                 }
@@ -242,7 +251,7 @@ function iniciarApi() {
             var randomNumber = getRandomNumber(1, 100);
             console.log(randomNumber)
 
-            if(randomNumber >= 50) {
+            if (randomNumber >= 50) {
                 if (saveToYourLibraryButton != undefined) {
                     saveToYourLibraryButton.click();
                 }
@@ -250,29 +259,42 @@ function iniciarApi() {
         }
 
         function playButton() {
-            let playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/button")
+            //let playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/button")
+            //let playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/main/section/div/div[2]/div[2]/div[4]/div/div/div/div/div/button")
+            let playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/main/section/div[3]/div[4]/div/div/div/div/div/button")
 
             //const playButton = getElementByXpath(classNameFields.playButton);
             if (playButton != undefined) {
                 var title = playButton.getAttribute('aria-label');;
-                if (title.indexOf('Tocar') >= 0 || title.indexOf('Play') >= 0 || title.indexOf('Reproduzir') >= 0)
+                if (title.indexOf('Tocar') >= 0 || title.indexOf('Play') >= 0 || title.indexOf('Reproduzir') >= 0) {
+                    console.log("esta tocando n faz nada")
                     playButton.click();
+                }
             }
         }
 
         function stopButton() {
-            let playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/button")
+            //let playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/button")
+            let playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/main/section/div[3]/div[4]/div/div/div/div/div/button")
 
             //const playButton = getElementByXpath(classNameFields.playButton);
             if (playButton != undefined) {
                 var title = playButton.ariaLabel;
-                if (title.indexOf('Pausar') >= 0 || title.indexOf('Pause') >= 0)
+                if (title.indexOf('Pausar') >= 0 || title.indexOf('Pause') >= 0) {
                     playButton.click();
+                    console.log("esta pausado faz algo")
+                    playButton.click();
+                } else {
+                    if (title.indexOf('Tocar') >= 0 || title.indexOf('Play') >= 0 || title.indexOf('Reproduzir') >= 0) {
+                        console.log("estou pausado me de play")
+                        playButton.click();
+                    }
+                }
             }
         }
 
         function playPlayList() {
-            const playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/main/section/div/div[2]/div[2]/div[4]/div/div/div/div/div/button")
+            const playButton = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/main/section/div[3]/div[4]/div/div/div/div/div/button")
             if (playButton != undefined) {
                 var title = playButton.ariaLabel;
                 if (title.indexOf('Tocar') >= 0 || title.indexOf('Play') >= 0)
@@ -311,13 +333,12 @@ function iniciarApi() {
             if (foundTrack == false) {
                 objSpotify.CHANGED_PLAYLIST = true;
                 document.body.style.backgroundColor = 'red';
-                stopButton();
+                //stopButton();
             }
         }
 
         function timerIsPlay() {
-            if (objSpotify.PLAYLIST_END_TIME == '')
-                objSpotify.PLAYLIST_END_TIME = new Date();
+            if (objSpotify.PLAYLIST_END_TIME == '') { objSpotify.PLAYLIST_END_TIME = new Date(); }
 
             if (new Date() > new Date(objSpotify.PLAYLIST_END_TIME) &&
                 new Date(objSpotify.PLAYLIST_END_TIME) < new Date(objSpotify.PLAYLIST_PAUSE_TIME) &&
@@ -446,13 +467,13 @@ function iniciarApi() {
             // }
 
             // return false;
-        
+
             let nameMusicElement = getElementByXpath("//*[@id=\"main\"]/div/div[2]/div[3]/footer/div/div[1]/div/div[2]/div[1]/div/div/div/div/span/a")
             if (nameMusicElement && currentMusic !== nameMusicElement.textContent) {
                 currentMusic = nameMusicElement.textContent;
                 return true;
             }
-        
+
             return false;
         }
 
@@ -467,7 +488,5 @@ function iniciarApi() {
         function getRandomNumber(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        
     });
 }
-
